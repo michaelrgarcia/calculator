@@ -25,6 +25,7 @@ html, body, .content {
     width: 60vmin;
     height: 85vmin;
     padding: 1.5rem;
+    box-shadow: inset  -5px -5px 5px #555;
 }
 
 .output {
@@ -50,11 +51,19 @@ html, body, .content {
     width: 14vmin;
     height: 13vmin;
     border-radius: 10px;
-    background: #777;
+    background: #666;
     color: white;
     font-weight: bold;
     font-size: 2.5em;
-    border: 3px solid rgb(150, 150, 150);
+    border: 3px solid #121212;
+}
+
+.buttons div .operator {
+    background: #333;
+}
+
+.buttons div .control {
+    background: #999;
 }
 
 .buttons div .zero {
