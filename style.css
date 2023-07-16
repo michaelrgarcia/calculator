@@ -20,7 +20,7 @@ html, body, .content {
     flex-direction: column;
     color: white;
     background: #222121;
-    border: 8px solid rgb(60, 60, 60);
+    border: 8px groove rgb(82, 81, 81);
     border-radius: 10px;
     width: 60vmin;
     height: 85vmin;
@@ -34,4 +34,29 @@ html, body, .content {
     padding: 1rem;
     text-align: right;
     background: #121212;
+}
+
+.buttons {
+    display:flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 59.6vmin;
+    height: 67vmin;
+    margin-top: 5%;
+    padding: .6rem;
+}
+
+.buttons div button {
+    width: 14vmin;
+    height: 13vmin;
+    border-radius: 10px;
+    background: #777;
+    color: white;
+    font-weight: bold;
+    font-size: 2.5em;
+    border: 3px solid rgb(150, 150, 150);
+}
+
+.buttons div .zero {
+    width: 28.5vmin;
 }
