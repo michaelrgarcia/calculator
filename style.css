@@ -51,7 +51,7 @@ html, body, .content {
     width: 14vmin;
     height: 13vmin;
     border-radius: 10px;
-    background: #666;
+    background: #777;
     color: white;
     font-weight: bold;
     font-size: 2.5em;
@@ -59,11 +59,11 @@ html, body, .content {
 }
 
 .buttons div .operator {
-    background: #333;
+    background: #4d4d4d;
 }
 
 .buttons div .control {
-    background: #999;
+    background: #444;
 }
 
 .buttons div .zero {
