@@ -1,11 +1,11 @@
+const calcButtons = document.querySelectorAll(".buttons div button");
 let num1 = 0;
 let operator = null;
 let num2 = 0;
-const output = document.querySelector(".output");
-const calcButtons = document.querySelectorAll(".buttons div button");
 
 calcButtons.forEach((button) => {
     button.addEventListener("click", () => {
+        const output = document.querySelector(".output");
         if (button.textContent === "AC") {
             clear();
             num1 = 0;
@@ -25,18 +25,8 @@ calcButtons.forEach((button) => {
             if (button.className === "equal" && operator !== null) {
                 output.textContent = operate(operator, +num1, +num2);
                 clear();
+                num1 = output.textContent;
             }
-            
-
-    /*         
-            if (button.className === "equal" && operator !== null && num1 !== null) {
-                output.textContent = operate(operator, +num1, +num2);  
-                operator = null;
-                num1 = null;
-                num2 = null;
-
-            }
-    */
         }
         if (button.classList.contains("num")) {
             if (operator === null) {
