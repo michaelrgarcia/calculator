@@ -23,7 +23,7 @@ html, body, .content {
     border: 8px groove rgb(82, 81, 81);
     border-radius: 10px;
     width: 60vmin;
-    height: 85vmin;
+    height: 80vmin;
     padding: 1.5rem;
     box-shadow: inset  -5px -5px 5px #555;
 }
@@ -32,7 +32,7 @@ html, body, .content {
     border: 1px solid rgb(100, 100, 100);
     border-radius: 10px;
     font-size: 5em;
-    padding: 1rem;
+    padding: 0.2em;
     text-align: right;
     background: #121212;
 }
@@ -40,16 +40,17 @@ html, body, .content {
 .buttons {
     display:flex;
     flex-direction: column;
+    flex-shrink: 0;
     gap: 2px;
     width: 59.6vmin;
     height: 67vmin;
-    margin-top: 5%;
-    padding: .6rem;
+    margin-top: 6%;
+    padding: 0.7rem;
 }
 
 .buttons div button {
     width: 14vmin;
-    height: 13vmin;
+    height: 11.5vmin;
     border-radius: 10px;
     background: #777;
     color: white;
@@ -64,6 +65,7 @@ html, body, .content {
 
 .buttons div .control {
     background: #444;
+    width: 21.3vmin;
 }
 
 .buttons div .zero {
