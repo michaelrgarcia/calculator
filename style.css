@@ -52,15 +52,25 @@ html, body, .content {
     width: 14vmin;
     height: 11.5vmin;
     border-radius: 10px;
-    background: #777;
     color: white;
     font-weight: bold;
     font-size: 2.5em;
     border: 3px solid #121212;
 }
 
-.buttons div .operator {
-    background: #4d4d4d;
+.buttons div .num,
+.decimal,
+.equal {
+    background: #777;
+}
+
+.buttons div .unselected {
+    background: rgb(80, 80, 85);
+}
+
+.buttons div .selected {
+    background: rgb(220, 220, 225);
+    opacity: 0.7;
 }
 
 .buttons div .control {
