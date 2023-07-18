@@ -27,6 +27,12 @@ calcButtons.forEach((button) => {
                 button.classList.remove("unselected");
                 button.classList.add("selected");
                 console.log(operator)
+            } else if (button.classList.contains("operator") && operator !== null && num2 !== 0) {
+                equal();
+                operator = button.textContent;
+                button.classList.remove("unselected");
+                button.classList.add("selected");
+                console.log(operator)
             }
             if ((button.classList.contains("num") && output.textContent === "0") || (button.classList.contains("num") && operator !== null && num2 === 0) || button.classList.contains("num") && expressionReset === true) {
                 output.textContent = button.textContent;
@@ -34,11 +40,7 @@ calcButtons.forEach((button) => {
                 output.textContent += button.textContent;
             }
             if (button.className === "equal" && operator !== null) {
-                output.textContent = operate(operator, +num1, +num2);
-                num1 = output.textContent;
-                num2 = 0;
-                operator = null;
-                expressionReset = true;
+                equal();
             }
         }
         if (button.classList.contains("num")) {
@@ -62,10 +64,15 @@ calcButtons.forEach((button) => {
 });
 
 function equal() {
-
+    output.textContent = +operate(operator, +num1, +num2).toFixed(8);
+    num1 = output.textContent;
+    num2 = 0;
+    operator = null;
+    expressionReset = true
 }
 
 function operate(op, a, b) {
+    expressionReset = true;
     if (op === "/" && a === 0 && b === 0) return "no";
     if (op == "+") return add(a, b);
     if (op == "-") return subtract(a, b);
