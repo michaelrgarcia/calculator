@@ -34,14 +34,15 @@ calcButtons.forEach((button) => {
                 button.classList.add("selected");
                 console.log(operator)
             }
-            if ((button.classList.contains("num") && output.textContent === "0") || (button.classList.contains("num") && operator !== null && num2 === 0) || button.classList.contains("num") && expressionReset === true) {
+            if ((button.classList.contains("num") && 
+                output.textContent === "0") ||
+                (button.classList.contains("num") && operator !== null && num2 === 0) ||
+                (button.classList.contains("num") && expressionReset === true)) {
                 output.textContent = button.textContent;
             } else if (button.classList.contains("num") && output.textContent !== "0") {
                 output.textContent += button.textContent;
             }
-            if (button.className === "equal" && operator !== null) {
-                equal();
-            }
+            if (button.className === "equal" && operator !== null) equal();
         }
         if (button.classList.contains("num")) {
             if (operator === null) {
