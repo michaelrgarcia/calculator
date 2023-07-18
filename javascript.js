@@ -1,38 +1,59 @@
 const calcButtons = document.querySelectorAll(".buttons div button");
+const output = document.querySelector(".output");
 let num1 = 0;
 let operator = null;
 let num2 = 0;
+let expressionReset =  false;
 
 calcButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        const output = document.querySelector(".output");
         if (button.textContent === "AC") {
-            clear();
-            num1 = 0;
+            num1 = 0;            
+            num2 = 0;
+            operator = null;
             output.textContent = "0";
         }
         if (output.textContent.length < 11) {
-            if (button.textContent === "DEL") del();
-            if (button.className === "operator" && operator === null) {
+            if (button.textContent === "DEL") {
+                let sliced = output.textContent.slice(0, -1);
+                if (output.textContent.length > 1) {
+                    output.textContent = sliced;
+                } else if (output.textContent.length === 1) {
+                    output.textContent = "0"
+                }
+            }
+            if (button.classList.contains("operator") && operator === null) {
                 operator = button.textContent;
+                button.classList.remove("unselected");
+                button.classList.add("selected");
                 console.log(operator)
             }
-            if ((button.classList.contains("num") && output.textContent === "0") || button.classList.contains("num") && operator !== null && num2 === 0) {
-                output.textContent = button.textContent
+            if ((button.classList.contains("num") && output.textContent === "0") || (button.classList.contains("num") && operator !== null && num2 === 0) || button.classList.contains("num") && expressionReset === true) {
+                output.textContent = button.textContent;
             } else if (button.classList.contains("num") && output.textContent !== "0") {
                 output.textContent += button.textContent;
             }
             if (button.className === "equal" && operator !== null) {
                 output.textContent = operate(operator, +num1, +num2);
-                clear();
                 num1 = output.textContent;
+                num2 = 0;
+                operator = null;
+                expressionReset = true;
             }
         }
         if (button.classList.contains("num")) {
             if (operator === null) {
                 num1 = output.textContent
                 console.log(num1);
+                expressionReset = false;
             } else {
+                const operators = document.querySelectorAll(".buttons div .operator")
+                operators.forEach((button) => {
+                    if (button.classList.contains("selected")) {
+                        button.classList.remove("selected");
+                        button.classList.add("unselected");
+                    } 
+                });
                 num2 = output.textContent;
                 console.log(num2);
             }
@@ -40,21 +61,12 @@ calcButtons.forEach((button) => {
     });
 });
 
-function clear() {
-    num2 = 0;
-    operator = null;
-}
+function equal() {
 
-function del() {
-    let sliced = output.textContent.slice(0, -1);
-    if (output.textContent.length > 1) {
-        output.textContent = sliced;
-    } else if (output.textContent.length === 1) {
-        output.textContent = "0"
-    }
 }
 
 function operate(op, a, b) {
+    if (op === "/" && a === 0 && b === 0) return "no";
     if (op == "+") return add(a, b);
     if (op == "-") return subtract(a, b);
     if (op == "*") return multiply(a, b);
