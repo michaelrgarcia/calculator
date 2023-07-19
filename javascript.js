@@ -14,6 +14,13 @@ controlButtons.forEach((button) => {
             num1 = 0;            
             num2 = 0;
             operator = "";
+            const operators = document.querySelectorAll(".buttons div .operator")
+            operators.forEach((button) => {
+                if (button.classList.contains("selected")) {
+                    button.classList.remove("selected");
+                    button.classList.add("unselected");
+                } 
+                });
             output.textContent = "0";
         } else if (button.textContent === "DEL" && output.textContent.length < 11) {
             let sliced = output.textContent.slice(0, -1);
@@ -49,8 +56,7 @@ numButtons.forEach((button) => {
             num2 = output.textContent;
             console.log(num2);
             expressionReset = false;
-        }
-        }
+        }}
     });
 });
 
@@ -78,7 +84,7 @@ otherButtons.forEach((button) => {
 });
 
 function equal() {
-    output.textContent = +operate(operator, +num1, +num2).toFixed(6);
+    output.textContent = operate(operator, +num1, +num2);
     num1 = output.textContent;
     num2 = 0;
     operator = "";
@@ -86,11 +92,11 @@ function equal() {
 }
 
 function operate(op, a, b) {
-    if (op === "/" && a === 0 && b === 0) return "no";
-    if (op === "+") return add(a, b);
-    if (op === "-") return subtract(a, b);
-    if (op === "*") return multiply(a, b);
-    if (op === "/") return divide(a, b);
+    if (op === "/" && (a === 0 || b === 0)) return "no"
+    if (op === "+") return +add(a, b).toFixed(6);
+    if (op === "-") return +subtract(a, b).toFixed(6);
+    if (op === "*") return +multiply(a, b).toFixed(6);    
+    if (op === "/" && (a !== 0 || b !== 0)) return +divide(a, b).toFixed(6);
 }
 
 function add(a, b) {
