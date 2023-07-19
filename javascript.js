@@ -4,7 +4,7 @@ const controlButtons = document.querySelectorAll(".buttons div .control");
 const otherButtons = document.querySelectorAll(".buttons div .other");
 const output = document.querySelector(".output");
 let num1 = 0;
-let operator = null;
+let operator = "";
 let num2 = 0;
 let expressionReset = false;
 
@@ -13,7 +13,7 @@ controlButtons.forEach((button) => {
         if (button.textContent === "AC") {
             num1 = 0;            
             num2 = 0;
-            operator = null;
+            operator = "";
             output.textContent = "0";
         } else if (button.textContent === "DEL" && output.textContent.length < 11) {
             let sliced = output.textContent.slice(0, -1);
@@ -29,12 +29,12 @@ controlButtons.forEach((button) => {
 numButtons.forEach((button) => {
     button.addEventListener("click", () => {
         if (output.textContent.length < 11) {
-            if (output.textContent === "0" || (operator !== null && num2 === 0) || expressionReset === true) {
+            if (output.textContent === "0" || (operator !== "" && num2 === 0) || expressionReset === true) {
                 output.textContent = button.textContent;
             } else if (output.textContent !== "0") {
                 output.textContent += button.textContent;
             }  
-        if (operator === null) {
+        if (operator === "") {
             num1 = output.textContent
             console.log(num1);
             expressionReset = false;
@@ -56,12 +56,12 @@ numButtons.forEach((button) => {
 
 operatorButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        if (operator === null) {
+        if (operator === "") {
             operator = button.textContent;
             button.classList.remove("unselected");
             button.classList.add("selected");
             console.log(operator)
-        } else if (operator !== null && num2 !== 0) {
+        } else if (operator !== "" && num2 !== 0) {
             equal();
             operator = button.textContent;
             button.classList.remove("unselected");
@@ -73,7 +73,7 @@ operatorButtons.forEach((button) => {
 
 otherButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        if (button.classList.contains("equal") && operator !== null) equal();
+        if (button.classList.contains("equal") && operator !== "") equal();
     });
 });
 
@@ -81,7 +81,7 @@ function equal() {
     output.textContent = +operate(operator, +num1, +num2).toFixed(6);
     num1 = output.textContent;
     num2 = 0;
-    operator = null;
+    operator = "";
     expressionReset = true
 }
 
