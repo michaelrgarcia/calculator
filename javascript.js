@@ -9,12 +9,14 @@ let num2 = 0;
 let expressionReset = false;
 let decimalPlaced = false;
 
+
 controlButtons.forEach((button) => {
     button.addEventListener("click", () => {
         if (button.textContent === "AC") {
             num1 = 0;            
             num2 = 0;
             operator = "";
+            decimalPlaced = false;
             const operators = document.querySelectorAll(".buttons div .operator")
             operators.forEach((button) => {
                 if (button.classList.contains("selected")) {
@@ -23,7 +25,7 @@ controlButtons.forEach((button) => {
                 } 
             });
             output.textContent = "0";
-        } else if (button.textContent === "DEL" && output.textContent.length < 11) {
+        } else if (button.textContent === "DEL" && output.textContent.length <= 11) {
             let sliced = output.textContent.slice(0, -1);
             if (output.textContent.length > 1) {
                 output.textContent = sliced;
@@ -31,6 +33,7 @@ controlButtons.forEach((button) => {
                 output.textContent = "0"
             }
         }
+        if (!output.textContent.includes(".")) decimalPlaced = false;
     });
 });
 
@@ -52,6 +55,7 @@ numButtons.forEach((button) => {
             if (button.classList.contains("selected")) {
                 button.classList.remove("selected");
                 button.classList.add("unselected");
+                decimalPlaced = false;
             } 
             });
             num2 = output.textContent;
@@ -75,7 +79,7 @@ operatorButtons.forEach((button) => {
             button.classList.add("selected");
             console.log(operator)
         }
-        decimalPlaced = false;
+        decimalPlaced = true
     });
 });
 
@@ -83,7 +87,7 @@ otherButtons.forEach((button) => {
     button.addEventListener("click", () => {
         if (button.classList.contains("equal") && operator !== "") equal();
         if (button.classList.contains("decimal") && output.textContent.length >= 1) {
-            if (decimalPlaced === false) {
+            if (decimalPlaced === false || (decimalPlaced === false && operator !== "")) {
                 output.textContent += button.textContent;
                 decimalPlaced = true;
             }
@@ -97,6 +101,7 @@ function equal() {
     num2 = 0;
     operator = "";
     expressionReset = true
+    decimalPlaced = true;
 }
 
 function operate(op, a, b) {
