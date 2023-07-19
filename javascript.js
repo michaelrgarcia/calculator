@@ -7,6 +7,7 @@ let num1 = 0;
 let operator = "";
 let num2 = 0;
 let expressionReset = false;
+let decimalPlaced = false;
 
 controlButtons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -20,7 +21,7 @@ controlButtons.forEach((button) => {
                     button.classList.remove("selected");
                     button.classList.add("unselected");
                 } 
-                });
+            });
             output.textContent = "0";
         } else if (button.textContent === "DEL" && output.textContent.length < 11) {
             let sliced = output.textContent.slice(0, -1);
@@ -74,12 +75,19 @@ operatorButtons.forEach((button) => {
             button.classList.add("selected");
             console.log(operator)
         }
+        decimalPlaced = false;
     });
 });
 
 otherButtons.forEach((button) => {
     button.addEventListener("click", () => {
         if (button.classList.contains("equal") && operator !== "") equal();
+        if (button.classList.contains("decimal") && output.textContent.length >= 1) {
+            if (decimalPlaced === false) {
+                output.textContent += button.textContent;
+                decimalPlaced = true;
+            }
+        }
     });
 });
 
