@@ -25,7 +25,7 @@ controlButtons.forEach((button) => {
                 } 
             });
             output.textContent = "0";
-        } else if (button.textContent === "DEL" && output.textContent.length <= 11) {
+        } else if (button.textContent === "DEL" && output.textContent.length <= 10) {
             let sliced = output.textContent.slice(0, -1);
             if (output.textContent.length > 1) {
                 output.textContent = sliced;
@@ -39,12 +39,15 @@ controlButtons.forEach((button) => {
 
 numButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        if (output.textContent.length < 11) {
-            if (output.textContent === "0" || (operator !== "" && num2 === 0) || expressionReset === true) {
-                output.textContent = button.textContent;
-            } else if (output.textContent !== "0") {
-                output.textContent += button.textContent;
-            }  
+        if (output.textContent.length >= 10) {
+            let max = output.textContent.substring(0, 10);
+            output.textContent = max;
+        }
+        if (output.textContent === "0" || (operator !== "" && num2 === 0) || expressionReset === true) {
+            output.textContent = button.textContent;
+        } else if (output.textContent !== "0" && output.textContent.length !== 10) {
+            output.textContent += button.textContent;
+        }  
         if (operator === "") {
             num1 = output.textContent
             console.log(num1);
@@ -56,12 +59,11 @@ numButtons.forEach((button) => {
                 button.classList.remove("selected");
                 button.classList.add("unselected");
                 decimalPlaced = false;
-            } 
-            });
+            }});
             num2 = output.textContent;
             console.log(num2);
             expressionReset = false;
-        }}
+        }
     });
 });
 
@@ -95,8 +97,13 @@ otherButtons.forEach((button) => {
     });
 });
 
+
 function equal() {
-    output.textContent = operate(operator, +num1, +num2);
+    if (operator === "/" && (num1 === 0 || num2 === 0)) {
+        output.textContent = "no"
+    } else {
+        output.textContent = operate(operator, +num1, +num2).toPrecision(10);
+    }
     num1 = output.textContent;
     num2 = 0;
     operator = "";
@@ -105,11 +112,10 @@ function equal() {
 }
 
 function operate(op, a, b) {
-    if (op === "/" && (a === 0 || b === 0)) return "no"
-    if (op === "+") return +add(a, b).toFixed(6);
-    if (op === "-") return +subtract(a, b).toFixed(6);
-    if (op === "*") return +multiply(a, b).toFixed(6);    
-    if (op === "/" && (a !== 0 || b !== 0)) return +divide(a, b).toFixed(6);
+    if (op === "+") return +add(a, b);
+    if (op === "-") return +subtract(a, b);
+    if (op === "*") return +multiply(a, b);    
+    if (op === "/" && (a !== 0 || b !== 0)) return +divide(a, b);
 }
 
 function add(a, b) {
