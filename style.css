@@ -31,11 +31,10 @@ html, body, .content {
 .output {
     border: 1px solid rgb(100, 100, 100);
     border-radius: 10px;
-    font-size: 4.5em;
-    padding: 0.2em;
+    font-size: 3.5em;
+    padding: 0.4em;
     text-align: right;
     background: #121212;
-    text-overflow: ellipsis;
 }
 
 .buttons {
@@ -45,7 +44,7 @@ html, body, .content {
     gap: 2px;
     width: 59.6vmin;
     height: 67vmin;
-    margin-top: 6%;
+    margin-top: 7%;
     padding: 0.7rem;
 }
 
