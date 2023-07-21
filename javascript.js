@@ -9,7 +9,7 @@ let num2 = "";
 let expressionReset = false;
 let decimalPlaced = false;
 
-window.addEventListener("keydown", keyHandler);
+window.addEventListener("keydown", keyHandler, false);
 
 controlButtons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -43,11 +43,10 @@ otherButtons.forEach((button) => {
 function keyHandler(e) {
     if (e.key === "Escape") clearOutput();
     if (e.key === "Backspace") deleteNum();
-    if (e.key >= 0 && e.key <= 9) addNum(e.key)
+    if (+e.key && e.key >= 0 && e.key <= 9) addNum(e.key)
     if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/") addOperator(e.key);
     if (e.key === "=" || e.key === "Enter") equal();
     if (e.key === ".") addDecimal();
-    e.preventDefault()
 }
 
 function clearOutput() {
