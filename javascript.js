@@ -9,61 +9,21 @@ let num2 = 0;
 let expressionReset = false;
 let decimalPlaced = false;
 
+window.addEventListener("keydown", keyHandler);
 
 controlButtons.forEach((button) => {
     button.addEventListener("click", () => {
         if (button.textContent === "AC") {
-            num1 = 0;            
-            num2 = 0;
-            operator = "";
-            decimalPlaced = false;
-            const operators = document.querySelectorAll(".buttons div .operator")
-            operators.forEach((button) => {
-                if (button.classList.contains("selected")) {
-                    button.classList.remove("selected");
-                    button.classList.add("unselected");
-                } 
-            });
-            output.textContent = "0";
-        } else if (button.textContent === "DEL" && output.textContent.length <= 10) {
-            let sliced = output.textContent.slice(0, -1);
-            if (output.textContent.length > 1) {
-                output.textContent = sliced;
-            } else if (output.textContent.length === 1) {
-                output.textContent = "0"
-            }
+            clearOutput();
+        } else if (button.textContent === "DEL") {
+            deleteNum();
         }
-        if (!output.textContent.includes(".")) decimalPlaced = false;
     });
 });
 
 numButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        if (output.textContent.length >= 10) {
-            let max = output.textContent.substring(0, 10);
-            output.textContent = max;
-        }
-        if (output.textContent === "0" || (operator !== "" && num2 === 0) || expressionReset === true) {
-            output.textContent = button.textContent;
-        } else if (output.textContent !== "0" && output.textContent.length !== 10) {
-            output.textContent += button.textContent;
-        }  
-        if (operator === "") {
-            num1 = output.textContent
-            console.log(num1);
-            expressionReset = false;
-        } else {
-            const operators = document.querySelectorAll(".buttons div .operator")
-            operators.forEach((button) => {
-            if (button.classList.contains("selected")) {
-                button.classList.remove("selected");
-                button.classList.add("unselected");
-                decimalPlaced = false;
-            }});
-            num2 = output.textContent;
-            console.log(num2);
-            expressionReset = false;
-        }
+        addNum(button.textContent);
     });
 });
 
@@ -97,13 +57,78 @@ otherButtons.forEach((button) => {
     });
 });
 
+function clearOutput() {
+    num1 = 0;            
+    num2 = 0;
+    operator = "";
+    decimalPlaced = false;
+    const operators = document.querySelectorAll(".buttons div .operator")
+    operators.forEach((button) => {
+        if (button.classList.contains("selected")) {
+            button.classList.remove("selected");
+            button.classList.add("unselected");
+        } 
+    });
+    output.textContent = "0";
+    if (!output.textContent.includes(".")) decimalPlaced = false;
+}
+
+function deleteNum() {
+    if (output.textContent.length <= 10) {
+        let sliced = output.textContent.slice(0, -1);
+        if (output.textContent.length > 1) {
+            output.textContent = sliced;
+        } else if (output.textContent.length === 1) {
+            output.textContent = "0"
+        }
+    }
+    if (!output.textContent.includes(".")) decimalPlaced = false;
+}
+
+function addNum(num) {
+    if (output.textContent.length >= 10) {
+        let max = output.textContent.substring(0, 10);
+        output.textContent = max;
+    }
+    if (output.textContent === "0" || (operator !== "" && num2 === 0) || expressionReset === true) {
+        output.textContent = num;
+    } else if (output.textContent !== "0" && output.textContent.length !== 10) {
+        output.textContent += num;
+    }
+    if (operator === "") {
+        num1 = output.textContent
+        console.log(num1);
+        expressionReset = false;
+    } else {
+        const operators = document.querySelectorAll(".buttons div .operator")
+        operators.forEach((button) => {
+        if (button.classList.contains("selected")) {
+            button.classList.remove("selected");
+            button.classList.add("unselected");
+            decimalPlaced = false;
+        }});
+        num2 = output.textContent;
+        console.log(num2);
+        expressionReset = false;
+    }  
+}
+
+
+function keyHandler(e) {
+    if (e.key === "Escape") clearOutput();
+    if (e.key === "Backspace") deleteNum();
+    if (e.key >= 0 && e.key <= 9) addNum(e.key)
+    e.preventDefault()
+}
+
 
 function equal() {
-    if (operator === "/" && (num1 === 0 || num2 === 0)) {
+    if ((operator === "/" || operator === "÷") && (num1 === 0 || num2 === 0)) {
         output.textContent = "no"
     } else {
-        output.textContent = operate(operator, +num1, +num2).toPrecision(10);
+        output.textContent = operate(operator, +num1, +num2).toPrecision(10).replace(/\.?0+$/,"");
     }
+
     num1 = output.textContent;
     num2 = 0;
     operator = "";
@@ -114,8 +139,8 @@ function equal() {
 function operate(op, a, b) {
     if (op === "+") return +add(a, b);
     if (op === "-") return +subtract(a, b);
-    if (op === "*") return +multiply(a, b);    
-    if (op === "/" && (a !== 0 || b !== 0)) return +divide(a, b);
+    if (op === "*" || op === "×") return +multiply(a, b);    
+    if ((op === "/" || op === "÷") && (a !== 0 || b !== 0)) return +divide(a, b);
 }
 
 function add(a, b) {
