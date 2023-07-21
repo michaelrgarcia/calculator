@@ -35,15 +35,20 @@ operatorButtons.forEach((button) => {
 
 otherButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        if (button.classList.contains("equal") && operator !== "") equal();
-        if (button.classList.contains("decimal") && output.textContent.length >= 1) {
-            if (decimalPlaced === false || (decimalPlaced === false && operator !== "")) {
-                output.textContent += button.textContent;
-                decimalPlaced = true;
-            }
-        }
+        if (button.classList.contains("equal")) equal();
+        if (button.classList.contains("decimal")) addDecimal();
     });
 });
+
+function keyHandler(e) {
+    if (e.key === "Escape") clearOutput();
+    if (e.key === "Backspace") deleteNum();
+    if (e.key >= 0 && e.key <= 9) addNum(e.key)
+    if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/") addOperator(e.key);
+    if (e.key === "=" || e.key === "Enter") equal();
+    if (e.key === ".") addDecimal();
+    e.preventDefault()
+}
 
 function clearOutput() {
     num1 = 0;            
@@ -135,16 +140,6 @@ function changeOp(op) {
     }
 }
 
-function keyHandler(e) {
-    if (e.key === "Escape") clearOutput();
-    if (e.key === "Backspace") deleteNum();
-    if (e.key >= 0 && e.key <= 9) addNum(e.key)
-    if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/") addOperator(e.key);
-    if (e.key === "=" || e.key === "Enter") equal();
-    e.preventDefault()
-}
-
-
 function equal() {
     if (operator !== "" && num2 !== "") {
         if (operator === "÷" && (num1 === 0 || num2 === 0)) {
@@ -156,6 +151,13 @@ function equal() {
         num2 = "";
         operator = "";
         expressionReset = true
+        decimalPlaced = true;
+    }
+}
+
+function addDecimal() {
+    if (decimalPlaced === false || (decimalPlaced === false && operator !== "")) {
+        output.textContent += ".";
         decimalPlaced = true;
     }
 }
