@@ -29,19 +29,7 @@ numButtons.forEach((button) => {
 
 operatorButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        if (operator === "") {
-            operator = button.textContent;
-            button.classList.remove("unselected");
-            button.classList.add("selected");
-            console.log(operator)
-        } else if (operator !== "" && num2 !== 0) {
-            equal();
-            operator = button.textContent;
-            button.classList.remove("unselected");
-            button.classList.add("selected");
-            console.log(operator)
-        }
-        decimalPlaced = true
+        addOperator(button.textContent);
     });
 });
 
@@ -113,11 +101,45 @@ function addNum(num) {
     }  
 }
 
+function addOperator(op) {
+    if (operator === "") {
+        changeOp(op);
+        operatorButtons.forEach((button) => {
+            if (operator === button.textContent) {
+                button.classList.remove("unselected");
+                button.classList.add("selected");  
+            } 
+        });
+        console.log(operator)
+    } else if (operator !== "" && num2 !== 0) {
+        equal();
+        changeOp(op);
+        operatorButtons.forEach((button) => {
+            if (operator === button.textContent) {
+                button.classList.remove("unselected");
+                button.classList.add("selected");  
+            } 
+        });
+        console.log(operator)
+    }
+    decimalPlaced = true
+}
+
+function changeOp(op) {
+    if (op === "*") {
+        operator = "×"
+    } else if (op === "/") {
+        operator = "÷"
+    } else {
+        operator = op;
+    }
+}
 
 function keyHandler(e) {
     if (e.key === "Escape") clearOutput();
     if (e.key === "Backspace") deleteNum();
     if (e.key >= 0 && e.key <= 9) addNum(e.key)
+    if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/") addOperator(e.key);
     e.preventDefault()
 }
 
@@ -128,7 +150,6 @@ function equal() {
     } else {
         output.textContent = operate(operator, +num1, +num2).toPrecision(10).replace(/\.?0+$/,"");
     }
-
     num1 = output.textContent;
     num2 = 0;
     operator = "";
