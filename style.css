@@ -58,25 +58,38 @@ html, body, .content {
     border: 3px solid #121212;
 }
 
-.buttons div .num,
-.decimal,
-.equal {
+.buttons div .control {
+    background: #444;
+    width: 21.3vmin;
+}
+
+.buttons div .control:hover {
+    background: #333;
+}
+
+.num,
+.other {
     background: #777;
+}
+
+.num:hover, 
+.other:hover {
+    background: #666;
 }
 
 .buttons div .unselected {
     background: rgb(80, 80, 85);
 }
 
-.buttons div .selected {
-    background: rgb(220, 220, 225);
-    opacity: 0.7;
+.buttons div .unselected:hover {
+    background: rgb(70, 70, 75)
 }
 
-.buttons div .control {
-    background: #444;
-    width: 21.3vmin;
+.buttons div .selected {
+    background:rgba(255, 255, 255, 0.705)
 }
+
+
 
 .buttons div .zero {
     width: 28.5vmin;
