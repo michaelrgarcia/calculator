@@ -75,6 +75,7 @@ function deleteNum() {
         }
     }
     if (!output.textContent.includes(".")) decimalPlaced = false;
+    updateNum();
 }
 
 function addNum(num) {
@@ -87,22 +88,7 @@ function addNum(num) {
     } else if (output.textContent !== "0" && output.textContent.length !== 10) {
         output.textContent += num;
     }
-    if (operator === "") {
-        num1 = output.textContent
-        console.log(num1);
-        expressionReset = false;
-    } else {
-        const operators = document.querySelectorAll(".buttons div .operator")
-        operators.forEach((button) => {
-        if (button.classList.contains("selected")) {
-            button.classList.remove("selected");
-            button.classList.add("unselected");
-            decimalPlaced = false;
-        }});
-        num2 = output.textContent;
-        console.log(num2);
-        expressionReset = false;
-    }  
+    updateNum();
 }
 
 function addOperator(op) {
@@ -159,6 +145,25 @@ function addDecimal() {
         output.textContent += ".";
         decimalPlaced = true;
     }
+}
+
+function updateNum() {
+    if (operator === "") {
+        num1 = output.textContent
+        console.log(num1);
+        expressionReset = false;
+    } else {
+        const operators = document.querySelectorAll(".buttons div .operator")
+        operators.forEach((button) => {
+        if (button.classList.contains("selected")) {
+            button.classList.remove("selected");
+            button.classList.add("unselected");
+            decimalPlaced = false;
+        }});
+        num2 = output.textContent;
+        console.log(num2);
+        expressionReset = false;
+    }  
 }
 
 function operate(op, a, b) {
