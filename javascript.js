@@ -126,7 +126,7 @@ function changeOp(op) {
 }
 
 function equal() {
-    if (operator !== "" && num2 !== "") {
+    if (operator !== "" && num2 !== "" && !isNaN(num1) && !isNaN(num2)) {
         if (operator === "÷" && (num1 === 0 || num2 === 0)) {
             output.textContent = "no"
         } else {
