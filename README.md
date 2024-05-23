@@ -13,6 +13,6 @@ and "DEL" to delete one character.
 
 The rest of the controls correspond to the text on the buttons.
 
-Find it here: https://leavesturninsideyou.github.io/calculator/
+Find it here: https://michaelrgarcia.github.io/calculator/
 
 This project will use  HTML, CSS, and JavaScript.
